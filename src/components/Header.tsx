@@ -1,13 +1,15 @@
 import { AppBar, Toolbar, IconButton, Typography, Box, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
+import { JSX } from 'react';
+
 
 interface HeaderProps {
-  onMenuClick: () => void;
+  onMenuClick: () => void; //(used to open a side drawer).
 }
 
-const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
-  const navigate = useNavigate();
+const Header = ({ onMenuClick }: HeaderProps): JSX.Element => {
+    const navigate = useNavigate();
 
   const navItems = [
     { label: 'Home', path: '/home' },
@@ -24,8 +26,8 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         <IconButton edge="start" color="inherit" onClick={onMenuClick}>
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ flexGrow: 1, ml: 1 }}>
-          Quality App
+        <Typography variant="h5" sx={{ flexGrow: 1,fontWeight:'bold',letterSpacing: 1, ml: 1 }}>
+          SimpSoft Solutions
         </Typography>
         <Box>
           {navItems.map((item) => (
