@@ -1,50 +1,31 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
+import React, { JSX, useState } from 'react';
+import { Box, Typography, Button, ButtonGroup } from '@mui/material';
+import { useProducts } from '../hooks/useProducts';
 
-const data = [
-  { name: 'Jan', qualityIndex: 60 },
-  { name: 'Feb', qualityIndex: 72 },
-  { name: 'Mar', qualityIndex: 80 },
-  { name: 'Apr', qualityIndex: 68 },
-  { name: 'May', qualityIndex: 90 },
-  { name: 'Jun', qualityIndex: 75 },
-];
-
-// Use the latest value for the scale
-const latestQualityIndex = data[data.length - 1].qualityIndex;
-
-// Map the value (0-100) to a 0-10 scale for the bar
-const scaleValue = (latestQualityIndex / 100) * 10;
-
-const getColor = (index: number) => {
-  if (index < 2) return '#e53935';
-  if (index < 4) return '#fb8c00';
-  if (index < 6) return '#fdd835';
-  if (index < 8) return '#9ccc65';
-  return '#43a047';
-};
+// 5 distinct colors for each star rating
+function getColor(index: number) {
+  switch (index) {
+    case 0: return '#e53935'; // 1 star - Poor (Red)
+    case 1: return '#fb8c00'; // 2 star - Average (Orange)
+    case 2: return '#fdd835'; // 3 star - Good (Yellow)
+    case 3: return '#43a047'; // 4 star - Very Good (Green)
+    case 4: return '#1e88e5'; // 5 star - Excellent (Blue)
+    default: return '#ccc';
+  }
+}
 
 const renderBars = () => {
   const bars = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 5; i++) {
     bars.push(
       <Box
         key={i}
         sx={{
-          width: '10%',
+          width: '20%',
           height: 20,
           backgroundColor: getColor(i),
           display: 'inline-block',
-          borderRight: i < 9 ? '1px solid #fff' : 'none',
+          borderRight: i < 4 ? '1px solid #fff' : 'none',
         }}
       />
     );
@@ -52,27 +33,49 @@ const renderBars = () => {
   return bars;
 };
 
-const Dashboard: React.FC = () => {
+const ratingLabels = ['Poor', 'Average', 'Good', 'Very Good', 'Excellent'];
+const productTypes = ['Hatchback', 'Sedan', 'SUV (Sport Utility Vehicle)', 'MUV (Multi Utility Vehicle) '];
+
+const Dashboard = (): JSX.Element => {
+  const { products } = useProducts();
+  const [selectedType, setSelectedType] = useState<string>(productTypes[0]);
+
+  // Filter products by selected type
+  const filteredProducts = products.filter(p => p.name === selectedType);
+
+  // Calculate average rating from filtered products
+  const avgRating =
+    filteredProducts.length > 0
+      ? filteredProducts.reduce((sum, p) => sum + p.rating, 0) / filteredProducts.length
+      : 0;
+
+  // Map average rating (1-5) to a 0-100% scale for the pointer
+  const scaleValue = ((avgRating - 1) / 4) * 100; // 1 maps to 0%, 5 maps to 100%
+
   return (
     <Box p={4}>
       <Typography variant="h4" gutterBottom>
         Quality Index Dashboard
       </Typography>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Line type="monotone" dataKey="qualityIndex" stroke="#1976d2" strokeWidth={2} />
-        </LineChart>
-      </ResponsiveContainer>
-
-      {/* Quality Index Scale */}
-      <Box mt={6}>
+      <Box mt={2} mb={2}>
+        <ButtonGroup variant="contained" color="primary">
+          {productTypes.map(type => (
+            <Button
+              key={type}
+              onClick={() => setSelectedType(type)}
+              variant={selectedType === type ? 'contained' : 'outlined'}
+            >
+              {type.replace(' (Sport Utility Vehicle)', '').replace(' (Multi Utility Vehicle) ', ' MUV')}
+            </Button>
+          ))}
+        </ButtonGroup>
+      </Box>
+      <Box mt={4}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-          <Typography variant="h6">Quality Index</Typography>
-          <Typography variant="h6">{latestQualityIndex}</Typography>
+          <Typography variant="h6">
+            {selectedType} Rating
+          </Typography>
+          <Typography variant="h6">{avgRating > 0 ? avgRating.toFixed(2) : 'N/A'}</Typography>
         </Box>
         <Box position="relative" width="100%">
           <Box display="flex" width="100%">
@@ -80,11 +83,11 @@ const Dashboard: React.FC = () => {
           </Box>
           <Box
             position="absolute"
-            left={`calc(${scaleValue * 10}% - 10px)`}
+            left={`calc(${scaleValue}% - 10px)`}
             top={-10}
             textAlign="center"
           >
-            <Typography variant="body2">{latestQualityIndex}</Typography>
+            <Typography variant="body2">{avgRating > 0 ? avgRating.toFixed(2) : 'N/A'}</Typography>
             <Box
               sx={{
                 width: 0,
@@ -98,8 +101,9 @@ const Dashboard: React.FC = () => {
           </Box>
         </Box>
         <Box display="flex" justifyContent="space-between" mt={1}>
-          <Typography variant="body2">Poor</Typography>
-          <Typography variant="body2">Good</Typography>
+          {ratingLabels.map(label => (
+            <Typography key={label} variant="body2">{label}</Typography>
+          ))}
         </Box>
       </Box>
     </Box>
