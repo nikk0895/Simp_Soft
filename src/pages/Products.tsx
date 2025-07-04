@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { Typography, CircularProgress, Box } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useProducts';
 
-const Products: React.FC = () => {
+const Products = (): JSX.Element => {
   const { products, loading } = useProducts();
 
   if (loading) return <CircularProgress />;
