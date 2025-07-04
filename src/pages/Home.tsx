@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { Box, Typography, LinearProgress } from '@mui/material';
 
 // Example quality index data
@@ -12,7 +12,7 @@ const qualityData = [
 // Find the highest value for scaling
 const maxValue = Math.max(...qualityData.map(q => q.value));
 
-const Home: React.FC = () => {
+const Home = (): JSX.Element => {
   return (
     <Box p={4}>
       <Typography variant="h4" gutterBottom>
