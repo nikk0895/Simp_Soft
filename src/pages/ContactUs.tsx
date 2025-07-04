@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { JSX } from 'react';
 
-const ContactUs: React.FC = () => {
+const ContactUs = (): JSX.Element => {
   return (
     <div>
       <h2>Contact Us</h2>
-      {/* Add contact form or info here */}
+      {/* contact details here */}
     </div>
   );
 };

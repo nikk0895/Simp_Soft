@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { JSX } from 'react';
 
-const AboutUs: React.FC = () => {
+const AboutUs = (): JSX.Element => {
   return (
     <div>
       <h2>About Us</h2>
-      {/* Add about us content here */}
+      {/* about us content  */}
     </div>
   );
 };

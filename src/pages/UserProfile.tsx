@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { JSX } from 'react';
 
-const UserProfile: React.FC = () => {
+const UserProfile = (): JSX.Element => {
   return (
     <div>
       <h2>User Profile</h2>
