@@ -1,6 +1,31 @@
-# Getting Started with Create React App
+# SimpSoft Car Product Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a React + TypeScript application for browsing, analyzing, and comparing various car types (Hatchback, Sedan, SUV, MUV) with a focus on quality index, ratings, and detailed product information.
+
+## Features
+
+- **Product Listing:** View a list of car products with images, price, rating, and customer views.
+- **Product Details:** Click on a product to see detailed information, including an overview, price range, top models, safety ratings, and sales trends.
+- **Quality Index Dashboard:** Visualize the average product rating for each car type with a color-coded, interactive scale.
+- **Category Filtering:** Instantly filter and view the quality index for Hatchback, Sedan, SUV, or MUV via dashboard buttons.
+- **Responsive UI:** Modern, responsive design using Material-UI.
+- **Mock Data:** Uses mock product data for demonstration and development.
+- **Testing:** Includes sample tests for components.
+
+## Project Structure
+
+```
+simp-soft/
+├── public/                  # Static files
+│   ├── index.html          # Main HTML file
+│
+└── src/                     # React components and TypeScript files
+    ├── components/         # Reusable components
+    ├── pages/              # Page components
+    ├── App.tsx             # Main app component
+    ├── index.tsx           # Entry point for React
+
+```
 
 ## Available Scripts
 
@@ -32,15 +57,3 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
